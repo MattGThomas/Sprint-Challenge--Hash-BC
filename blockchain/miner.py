@@ -23,11 +23,21 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
-    #  TODO: Your code here
+    # proof = 0
 
-    print("Proof found: " + str(proof) + " in " + str(timer() - start))
-    return proof
+    # last_hash = str(last_proof).encode()
+    # last_hash = hashlib.sha256(last_hash).hexdigest()
+
+    # while valid_proof(last_hash, proof) is False:
+    #     proof += 1
+
+    # produce random number as a string to use as a guess
+    guess_proof = str(random.random())
+    while not valid_proof(last_proof, guess_proof):
+        guess_proof = str(random.random())
+
+    print("Proof found: " + str(guess_proof) + " in " + str(timer() - start))
+    return guess_proof
 
 
 def valid_proof(last_hash, proof):
@@ -39,8 +49,15 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE912345, new hash 12345E88...
     """
 
-    # TODO: Your code here!
-    pass
+    # guess = f'{last_hash}{proof}'.encode()
+    # guess_hash = hashlib.sha256(guess).hexdigest()
+    # end = last_hash[-6:]
+    # return guess_hash.startswith(end)
+    last_proof = f"{last_hash}".encode()
+    lp_hash = hashlib.sha256(last_proof).hexdigest()
+    new_proof = f"{proof}".encode()
+    np_hash = hashlib.sha256(new_proof).hexdigest()
+    return np_hash[:5] == str(lp_hash)[-5:]
 
 
 if __name__ == '__main__':
