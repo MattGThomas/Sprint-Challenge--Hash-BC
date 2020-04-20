@@ -15,9 +15,30 @@ class Ticket:
 def reconstruct_trip(tickets, length):
     hashtable = HashTable(length)
     route = [None] * length
-
     """
-    YOUR CODE HERE
+    function takes Ticket class, and unscrambles trip based on 
+    where the source and destination 'NONE' are both located
     """
+    for ticket in tickets:
+        hash_table_insert(hashtable, ticket.source, ticket.destination)
 
-    pass
+    # change route to empty array to append destination
+    route = []
+
+    destination = hash_table_retrieve(hashtable, 'NONE')
+
+    while destination != 'NONE':
+        # route.hash_table_insert(destination)
+        route.append(destination)
+        # flights.append(destination)
+        destination = hash_table_retrieve(hashtable, destination)
+    # return flights
+    return route
+
+    # destination = hash_table_retrieve(hashtable, 'NONE')
+    # while destination != 'NONE':
+    #     route.append(destination)
+    #     destination = hash_table_retrieve(hashtable, destination)
+    # return route
+
+    # pass
